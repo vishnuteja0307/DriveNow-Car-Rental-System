@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard | DriveNow</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar dashboard-nav">
+    <a class="logo" href="user-dashboard.html">Drive<span>Now</span></a>
+    <div class="nav-user">
+      <span id="welcomeUser"></span>
+      <button class="btn btn-dark" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <section class="dashboard-header">
+      <div>
+        <p class="eyebrow">USER DASHBOARD</p>
+        <h1>Find your next ride.</h1>
+        <p class="muted">Browse available cars and rent the one that fits your journey.</p>
+      </div>
+      <input id="carSearch" class="search" type="search" placeholder="Search by car name or type...">
+    </section>
+
+    <section>
+      <div id="carsGrid" class="car-grid"></div>
+      <p id="noCars" class="empty hidden">No cars found.</p>
+    </section>
+
+    <section class="rentals-section">
+      <div class="section-heading left">
+        <p class="eyebrow">YOUR BOOKINGS</p>
+        <h2>My Rentals</h2>
+      </div>
+      <div id="myRentals"></div>
+    </section>
+  </main>
+
+  <div id="rentModal" class="modal hidden">
+    <div class="modal-card">
+      <button class="close" onclick="closeRentModal()">×</button>
+      <h2>Rent <span id="modalCarName"></span></h2>
+      <form id="rentForm">
+        <input id="modalCarId" type="hidden">
+        <label>Start Date</label>
+        <input id="startDate" type="date" required>
+        <label>End Date</label>
+        <input id="endDate" type="date" required>
+        <div id="pricePreview" class="price-preview">Select dates to calculate total.</div>
+        <button class="btn btn-red full" type="submit">Confirm Rental</button>
+        <p id="rentMessage" class="message"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/user.js"></script>
+</body>
+</html>
