@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DriveNow – Car Rental System (React + Vite)
 
 A React conversion of the original DriveNow HTML/CSS/JavaScript project.
@@ -33,3 +34,30 @@ Run `npm run build`. Vite creates the production build in `dist/`.
 
 ## Deploy on Vercel
 Import the GitHub repository into Vercel. Framework preset: Vite. Build command: `npm run build`. Output directory: `dist`.
+=======
+# DriveNow - Car Rental System
+
+## Pages
+- `index.html` - Landing/Home page
+- `register.html` - User registration
+- `login.html` - User/Admin login
+- `user-dashboard.html` - Browse and rent cars
+- `admin.html` - Manage cars and view bookings
+
+## Technologies
+HTML5, CSS3, JavaScript and LocalStorage.
+
+## LocalStorage
+The project stores:
+- Registered users: `driveNowUsers`
+- Current login/session: `driveNowCurrentUser`
+- Cars: `driveNowCars`
+- Rentals: `driveNowBookings`
+
+## Admin Login
+Email: `admin@drivenow.com`
+Password: `admin123`
+
+## Run
+Open `index.html` in a browser. No server is required for this demo.
+>>>>>>> 3482ac0d11b6795847775236f6b73187825ead12
