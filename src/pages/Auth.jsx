@@ -1,11 +1,40 @@
 
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  getUsers,
+  saveUsers,
+  setCurrentUser
+} from '../utils/storage';
+
+function AuthShell({ title, subtitle, children }) {
+  return (
+    <div className="auth-body">
+      <div className="auth-card">
+        <Link className="logo centered" to="/">
+          Drive<span>Now</span>
+        </Link>
+
+        <h1>{title}</h1>
+        <p className="muted">{subtitle}</p>
+
+        {children}
+
+        <Link className="back-link" to="/">
+          ← Back to home
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const submit = e => {
+  const submit = (e) => {
     e.preventDefault();
     const clean = email.trim().toLowerCase();
 
@@ -67,6 +96,102 @@ export function Login() {
 
       <p className="auth-bottom">
         Don't have an account? <Link to="/register">Register</Link>
+      </p>
+    </AuthShell>
+  );
+}
+
+export function Register() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    const clean = email.trim().toLowerCase();
+
+    if (password !== confirm) {
+      setMessage('Passwords do not match.');
+      return;
+    }
+
+    const users = getUsers();
+
+    if (users.some(u => u.email === clean)) {
+      setMessage('An account with this email already exists.');
+      return;
+    }
+
+    users.push({
+      id: Date.now().toString(),
+      name: name.trim(),
+      email: clean,
+      password
+    });
+
+    saveUsers(users);
+
+    setCurrentUser({
+      name: name.trim(),
+      email: clean,
+      role: 'user'
+    });
+
+    navigate('/dashboard');
+  };
+
+  return (
+    <AuthShell title="Create account" subtitle="Join DriveNow and start renting cars.">
+      <form onSubmit={submit}>
+        <label>Full Name</label>
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder="Enter your name"
+          required
+        />
+
+        <label>Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="Enter your email"
+          required
+        />
+
+        <label>Password</label>
+        <input
+          type="password"
+          minLength="6"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder="Minimum 6 characters"
+          required
+        />
+
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          value={confirm}
+          onChange={e => setConfirm(e.target.value)}
+          placeholder="Re-enter password"
+          required
+        />
+
+        <button className="btn btn-red full" type="submit">
+          Create Account
+        </button>
+
+        <p className="message">{message}</p>
+      </form>
+
+      <p className="auth-bottom">
+        Already have an account? <Link to="/login">Login</Link>
       </p>
     </AuthShell>
   );
